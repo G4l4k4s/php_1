@@ -148,55 +148,64 @@ unset($_SESSION['error']);
 <body>
 
     <?php if (isset($_SESSION['user'])): ?>
-        <p class="border">Bienvenido, <?= htmlspecialchars($_SESSION['user']['name']) ?>!</p>
-        <a href="logout.php">Cerrar sesión</a>
+        <div class="container mt-5">
+            <div class="text-center">
+                <h2 class="mb-3">Bienvenido, <?= htmlspecialchars($_SESSION['user']['name']) ?>!</h2>
+                <a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
+            </div>
 
-        <h2>Publicaciones</h2>
-        <ul>
-            <?php foreach ($posts as $post): ?>
-                <?php if ($post['status'] === 'published'): ?>
+            <h2 class="mt-4 text-center">Publicaciones</h2>
 
-                    <li>
-                        <h3><?= htmlspecialchars($post['title']) ?></h3>
-                        <p><?= htmlspecialchars($post['description']) ?></p>
-                        <img src="<?= htmlspecialchars($post['image']) ?>" alt="Imagen del post" width="300">
-                    </li>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </ul>
+            <div class="row mt-3">
+                <?php foreach ($posts as $post): ?>
+                    <?php if ($post['status'] === 'published'): ?>
 
-    <?php else: ?>
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow">
+                                <img src="<?= htmlspecialchars($post['image']) ?>" class="card-img-top" alt="Imagen del post">
+                                <div class="card-body">
+                                    <h3 class="card-title"><?= htmlspecialchars($post['title']) ?></h3>
+                                    <p class="card-text"><?= htmlspecialchars($post['description']) ?></p>
+                                </div>
+                            </div>
+                        </div>
 
-        <?php if ($error): ?>
-            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                </ul>
 
-        <div class="container vh-100 d-flex justify-content-center align-items-center">
-            <div class="card shadow border rounded p-4 w-25">
-                <h3 class="text-center mb-3">Iniciar Sesión</h3>
+            <?php else: ?>
 
                 <?php if ($error): ?>
-                    <div class="alert alert-danger text-center">
-                        <?= htmlspecialchars($error); ?>
-                    </div>
+                    <p style="color: red;"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
 
-                <form action="login.php" method="POST">
-                    <div class="mb-3">
-                        <input type="email" class="form-control" name="email" required placeholder="Correo Electrónico">
+                <div class="container vh-100 d-flex justify-content-center align-items-center">
+                    <div class="card shadow border rounded p-4 w-25">
+                        <h3 class="text-center mb-3">Iniciar Sesión</h3>
+
+                        <?php if ($error): ?>
+                            <div class="alert alert-danger text-center">
+                                <?= htmlspecialchars($error); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="login.php" method="POST">
+                            <div class="mb-3">
+                                <input type="email" class="form-control" name="email" required placeholder="Correo Electrónico">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" name="password" required class="form-control" placeholder="Contraseña">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Recordarme</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <input type="password" name="password" required class="form-control" placeholder="Contraseña">
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Recordarme</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
-                </form>
-            </div>
-        </div>
-    <?php endif; ?>
+                </div>
+            <?php endif; ?>
 
 </body>
 
