@@ -146,44 +146,57 @@ unset($_SESSION['error']);
 </head>
 
 <body>
-    <div>
-        <?php if (isset($_SESSION['user'])): ?>
-            <p>Bienvenido, <?= htmlspecialchars($_SESSION['user']['name']) ?>!</p>
-            <a href="logout.php">Cerrar sesión</a>
 
-            <h2>Publicaciones</h2>
-            <ul>
-                <?php foreach ($posts as $post): ?>
-                    <?php if ($post['status'] === 'published'): ?>
+    <?php if (isset($_SESSION['user'])): ?>
+        <p class="border">Bienvenido, <?= htmlspecialchars($_SESSION['user']['name']) ?>!</p>
+        <a href="logout.php">Cerrar sesión</a>
 
-                        <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <li>
-                                    <h3><?= htmlspecialchars($post['title']) ?></h3>
-                                    <p><?= htmlspecialchars($post['description']) ?></p>
-                                    <img src="<?= htmlspecialchars($post['image']) ?>" alt="Imagen del post" width="300">
-                                </li>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
+        <h2>Publicaciones</h2>
+        <ul>
+            <?php foreach ($posts as $post): ?>
+                <?php if ($post['status'] === 'published'): ?>
 
-        <?php else: ?>
-            <h2>Iniciar sesión</h2>
+                    <li>
+                        <h3><?= htmlspecialchars($post['title']) ?></h3>
+                        <p><?= htmlspecialchars($post['description']) ?></p>
+                        <img src="<?= htmlspecialchars($post['image']) ?>" alt="Imagen del post" width="300">
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
 
-            <?php if ($error): ?>
-                <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-            <?php endif; ?>
+    <?php else: ?>
 
-            <form action="login.php" method="POST">
-                <label>Email: <input type="email" name="email" required></label><br>
-                <label>Contraseña: <input type="password" name="password" required></label><br>
-                <button type="submit">Ingresar</button>
-            </form>
+        <?php if ($error): ?>
+            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
-    </div>
+
+        <div class="container vh-100 d-flex justify-content-center align-items-center">
+            <div class="card shadow border rounded p-4 w-25">
+                <h3 class="text-center mb-3">Iniciar Sesión</h3>
+
+                <?php if ($error): ?>
+                    <div class="alert alert-danger text-center">
+                        <?= htmlspecialchars($error); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="login.php" method="POST">
+                    <div class="mb-3">
+                        <input type="email" class="form-control" name="email" required placeholder="Correo Electrónico">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" name="password" required class="form-control" placeholder="Contraseña">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Recordarme</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
 
 </body>
 
